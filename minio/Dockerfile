@@ -1,4 +1,4 @@
-FROM cgr.dev/chainguard/wolfi-base:latest
+FROM chainguard/wolfi-base:latest
 
 # Install Nginx
 RUN apk add nginx minio
@@ -10,19 +10,11 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-RUN mkdir -p /etc/nginx/ssl/ && \
-    chown -R nonroot:nonroot /etc/nginx/ssl/ && \
-    mkdir -p /var/lib/nginx && \
-    chown -R nonroot:nonroot /var/lib/nginx/ && \
-    mkdir -p /var/lib/nginx/tmp && \
-    chown -R nonroot:nonroot /var/lib/nginx/tmp/ && \
-    mkdir -p /var/log/nginx && \
-    chown -R nonroot:nonroot /var/log/nginx/ && \
+RUN mkdir -p /etc/nginx/ssl/ /var/lib/nginx/tmp /var/log/nginx /run/nginx && \
+    chown -R nonroot:nonroot /etc/nginx/ssl/ /var/lib/nginx/ /var/log/nginx/ /run/nginx/ && \
     chmod -R 755 /etc/nginx/ssl/
 
-RUN mkdir -p /run/nginx && \
-    chown -R nonroot:nonroot /run/nginx/ && \
-    touch /run/nginx/nginx.pid && \
+RUN touch /run/nginx/nginx.pid && \
     chown -R nonroot:nonroot /run/nginx/nginx.pid
 
 RUN mkdir -p /data && \
