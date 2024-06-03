@@ -4,3 +4,5 @@ services:
       context: .
     ports:
       - "8090:8090"
+    # volumes:
+    #   - ./data:/pb/pb_data
