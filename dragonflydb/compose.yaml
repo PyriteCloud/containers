@@ -1,0 +1,14 @@
+services:
+  dragonflydb:
+    image: cgr.dev/chainguard/dragonfly:latest
+    # ports:
+    #   - 6379:6379
+
+  serverless-redis-http:
+    image: hiett/serverless-redis-http:latest
+    ports:
+      - "6379:80"
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: example_token
+      SRH_CONNECTION_STRING: "redis://dragonflydb:6379"

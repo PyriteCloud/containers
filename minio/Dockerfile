@@ -1,10 +1,7 @@
-FROM bitnami/minio:latest
-
-USER root
+FROM cgr.dev/chainguard/wolfi-base:latest
 
 # Install Nginx
-RUN apt-get update -y && \
-    apt-get install nginx -y
+RUN apk add nginx minio
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -14,18 +11,24 @@ COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 RUN mkdir -p /etc/nginx/ssl/ && \
-    chown -R 1001:1001 /etc/nginx/ssl/ && \
+    chown -R nonroot:nonroot /etc/nginx/ssl/ && \
     mkdir -p /var/lib/nginx && \
-    chown -R 1001:1001 /var/lib/nginx/ && \
+    chown -R nonroot:nonroot /var/lib/nginx/ && \
+    mkdir -p /var/lib/nginx/tmp && \
+    chown -R nonroot:nonroot /var/lib/nginx/tmp/ && \
     mkdir -p /var/log/nginx && \
-    chown -R 1001:1001 /var/log/nginx/ && \
+    chown -R nonroot:nonroot /var/log/nginx/ && \
     chmod -R 755 /etc/nginx/ssl/
 
-RUN touch /var/run/nginx.pid && \
-    chown -R 1001:1001 /var/run/nginx.pid /run/nginx.pid
+RUN mkdir -p /run/nginx && \
+    chown -R nonroot:nonroot /run/nginx/ && \
+    touch /run/nginx/nginx.pid && \
+    chown -R nonroot:nonroot /run/nginx/nginx.pid
 
-USER 1001
+RUN mkdir -p /data && \
+    chown -R nonroot:nonroot /data
+
+USER nonroot
 
 # Start MinIO and Nginx
-ENTRYPOINT [ "/start.sh" ] 
-CMD [ "/opt/bitnami/scripts/minio/run.sh" ]
+ENTRYPOINT ["/bin/sh","/start.sh"]
