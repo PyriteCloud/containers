@@ -1,0 +1,6 @@
+services:
+  pocketbase:
+    build:
+      context: .
+    ports:
+      - "8090:8090"
