@@ -2,9 +2,11 @@ services:
   minio:
     build:
       context: .
-    command: server /data --console-address ":9001"
+    # command: server /data --console-address ":9001"
     ports:
       - "80:80"
+    # volumes:
+    #   - ./data:/data
     environment:
       MINIO_ROOT_USER: pyrite
       MINIO_ROOT_PASSWORD: minio@pyrite

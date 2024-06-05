@@ -17,9 +17,6 @@ RUN mkdir -p /etc/nginx/ssl/ /var/lib/nginx/tmp /var/log/nginx /run/nginx && \
 RUN touch /run/nginx/nginx.pid && \
     chown -R nonroot:nonroot /run/nginx/nginx.pid
 
-RUN mkdir -p /data && \
-    chown -R nonroot:nonroot /data
-
 USER nonroot
 
 # Start MinIO and Nginx
