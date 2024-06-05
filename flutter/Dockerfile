@@ -20,7 +20,7 @@ ENV PATH="$PATH:/usr/bin/flutter/bin/cache/dart-sdk/bin"
 RUN git config --global --add safe.directory /usr/bin/flutter
 
 RUN flutter config --no-analytics
-RUN flutter precache
+RUN flutter precache --web
 
 ENTRYPOINT [ "flutter" ]
 CMD ["doctor", "-v"]
