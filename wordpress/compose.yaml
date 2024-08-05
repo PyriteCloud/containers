@@ -1,0 +1,8 @@
+services:
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - 80:80
